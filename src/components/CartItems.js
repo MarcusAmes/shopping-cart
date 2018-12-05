@@ -2,7 +2,7 @@ import React from 'react';
 import CartItem from './CartItem'
 
 function CartItems({cartItemsList}) {
-  const cartItems = cartItemsList.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem}/>)
+  const cartItems = cartItemsList.map(cartItem => <CartItem key={cartItem.product.id} cartItem={cartItem}/>)
   return (
     <div className="container">
       <h1>Cart Items</h1>

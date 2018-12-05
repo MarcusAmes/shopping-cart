@@ -20,10 +20,33 @@ class App extends Component {
       { id: 48, name: 'Awesome Leather Shoes', priceInCents: 3990 },
     ],
     cartItemsList: [
-      { id: 1, product: { id: 40, name: 'Mediocre Iron Watch', priceInCents: 399 }, quantity: 1 },
-      { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
-      { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
+      { product: { id: 40, name: 'Mediocre Iron Watch', priceInCents: 399 }, quantity: 1 },
+      { product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
+      { product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
     ]
+  }
+
+  addProduct = (product) => {
+    let isAlready = false;
+    let newList = JSON.parse(JSON.stringify(this.state.cartItemsList));
+    for(let i = 0; i < newList.length; i++) {
+      // console.log(this.state.cartItemsList[i].product.id);
+      if(newList[i].product.id === product.product.id) {
+        let updated = newList[i]
+        updated.quantity += Number(product.quantity)
+        newList.splice(i,1, updated)
+        this.setState(prevState => (
+          {cartItemsList: newList}
+        ))
+        isAlready = true;
+        return;
+      }
+    }
+    if(!isAlready) {
+      this.setState(prevState => (
+        {cartItemsList: prevState.cartItemsList.concat([product])}
+      ))
+    }
   }
 
   render() {
@@ -31,7 +54,7 @@ class App extends Component {
       <div className="App">
         <TopNav />
         <CartItems cartItemsList={this.state.cartItemsList}/>
-        <AddItems products={this.state.products} />
+        <AddItems products={this.state.products} onProductAdded={this.addProduct} />
         <CartFooter copyright={'2016'}/>
       </div>
 
