@@ -7,7 +7,7 @@ class CartItem extends Component{
       <div className="list-group-item">
         <div className="row">
           <div className="col-md-8">{name}</div>
-          <div className="col-md-2">{priceInCents}</div>
+          <div className="col-md-2">${priceInCents/100}</div>
           <div className="col-md-2">{quantity}</div>
         </div>
     </div>

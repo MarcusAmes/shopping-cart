@@ -30,7 +30,9 @@ class AddItem extends Component{
               {options}
             </select>
           </div>
-          <button type="submit"> Add </button>
+          <div className="col-12">      
+            <button type="submit"> Add </button>
+          </div>
         </form>
       </div>
     )
