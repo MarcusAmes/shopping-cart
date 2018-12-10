@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
 class AddItem extends Component{
-  state={};
+  state={
+    product: this.props.products[0],
+    quantity: 0
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +15,7 @@ class AddItem extends Component{
     const {products} = this.props;
 
     const options = products.map(product => <option key={product.id} value={JSON.stringify(product)}> {product.name} </option>)
-
+    console.log(this.state)
     return (
       <div className="container">
         <form onSubmit={ this.onSubmit } className="row">

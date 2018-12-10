@@ -28,24 +28,18 @@ class App extends Component {
 
   addProduct = (product) => {
     let isAlready = false;
-    let newList = JSON.parse(JSON.stringify(this.state.cartItemsList));
-    for(let i = 0; i < newList.length; i++) {
-      // console.log(this.state.cartItemsList[i].product.id);
-      if(newList[i].product.id === product.product.id) {
-        let updated = newList[i]
-        updated.quantity += Number(product.quantity)
-        newList.splice(i,1, updated)
-        this.setState(prevState => (
-          {cartItemsList: newList}
-        ))
+    const newList = this.state.cartItemsList.map(item => {
+      if ( product.product.id === item.product.id ) {
         isAlready = true;
-        return;
+        return { ...item, quantity: item.quantity + Number(product.quantity)}
+      } else {
+        return item
       }
-    }
-    if(!isAlready) {
-      this.setState(prevState => (
-        {cartItemsList: prevState.cartItemsList.concat([product])}
-      ))
+    })
+    if (isAlready) {
+      this.setState({cartItemsList: newList})
+    } else {
+      this.setState((prevState)=> ({ cartItemsList: [...newList, product] }))
     }
   }
 
@@ -62,24 +56,6 @@ class App extends Component {
         <AddItems products={this.state.products} onProductAdded={this.addProduct} />
         <CartFooter copyright={'2016'}/>
       </div>
-
-
-      // <div className="App">
-      //   <header className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <p>
-      //       Edit <code>src/App.js</code> and save to reload.
-      //     </p>
-      //     <a
-      //       className="App-link"
-      //       href="https://reactjs.org"
-      //       target="_blank"
-      //       rel="noopener noreferrer"
-      //     >
-      //       Learn React
-      //     </a>
-      //   </header>
-      // </div>
     );
   }
 }
